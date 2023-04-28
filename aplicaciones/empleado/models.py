@@ -17,4 +17,4 @@ class Empleado(models.Model):
     cargo = models.ForeignKey(Cargo, on_delete=models.RESTRICT)
 
     def __str__(self):
-        return self.nombre + '|' + self.correo + '|'+ self.activo
+        return self.nombre + ' | ' + self.correo + ' | '+ str(self.activo)
