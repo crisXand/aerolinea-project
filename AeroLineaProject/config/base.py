@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'aplicaciones.inicio',
     'aplicaciones.login',
-    'aplicaciones.empleado'
+    'aplicaciones.empleado',
+      #terceros
+    'captcha',
+
 ]
 
 MIDDLEWARE = [
@@ -108,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'es-ES'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/El_Salvador'
 
 USE_I18N = True
 
@@ -124,3 +127,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login_app:login'
