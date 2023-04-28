@@ -7,15 +7,15 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-
-class ModificarEmpleado( UpdateView):
-    
+@method_decorator(login_required, name='dispatch')
+class ModificarEmpleado(PermissionRequiredMixin, UpdateView):
+    permission_required = ('empleado.change_empleado')
     template_name = "empleados/modificar-empleado.html"
     model = Empleado
     form_class = EmpleadoForm
     success_url = reverse_lazy("empleados_app:listar-empleados")
 
-class ListarEmpleados(ListView):
+class ListarEmpleados(LoginRequiredMixin,ListView):
     template_name = 'empleados/listar-empleados.html'
     model = Empleado
     context_object_name = 'lista_empleados'
@@ -38,7 +38,7 @@ class CrearEmpleado2(CreateView):
     success_url = reverse_lazy("empleados_app:listar-empleados")
 
 # formulario creado por vista generica generado solo con un form model
-class CrearEmpleado(CreateView):
+class CrearEmpleado(LoginRequiredMixin,CreateView):
     form_class = EmpleadoForm
     template_name = "empleados/crear-empleado.html"
     success_url = reverse_lazy("empleados_app:listar-empleados")

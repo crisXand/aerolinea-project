@@ -7,6 +7,13 @@
   <title>Pagina inicial</title>
 </head>
 <body>
-  <h1>Hola desde inicio</h1>
+  {% if request.user.is_authenticated %}
+    <h1>Bienvenido {{ request.user.username }}</h1>
+    <a href="{% url 'login_app:logout' %}">Cerrar sesion</a>
+  {% else %}
+    <h2>Accesos denegado, debe iniciar sesion o registrate</h2>
+    <a href="{% url 'login_app:login' %}"> Login</a>
+    <a href="{% url 'login_app:nuevo-usuario' %}">Registrarse</a>
+  {% endif%}
 </body>
 </html>
