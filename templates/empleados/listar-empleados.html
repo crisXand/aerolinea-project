@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de empleados</title>
+    <style>
+        
+        body {
+            font-family: sans-serif ;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {background-color: coral;}
+
+        input[type=text] {
+            width: 30%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+            border: 3px solid #ccc;
+            -webkit-transition: 0.5s;
+            transition: 0.5s;
+            outline: none;
+            }
+
+            input[type=text]:focus {
+            border: 3px solid #555;
+            }   
+    </style>
+</head>
+<body>
+    <h2>Lista de empleados</h2>
+    <a href="{% url 'empleados_app:crear-empleado'%}">Nuevo empleado</a>
+    <br>
+    <br>
+    <form action="" method="get">
+        <input type="text" name="buscar" placeholder="Search" id="buscar">
+    </form>
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Nombre</th><th>Cargo</th><th>Operaciones</th></tr>
+        </thead>
+        <tbody>
+            {% for empleado in lista_empleados %}
+                <tr>
+                    <td>{{empleado.id}}</td>
+                    <td>{{ empleado.nombre }}</td>
+                    <td>{{ empleado.cargo }}</td>
+                    <td>
+                        <a href="{% url 'empleados_app:modificar-empleados' empleado.id%}">Editar</a> 
+                        <a href="{% url 'empleados_app:eliminar-empleados' empleado.id%}">Eliminar</a>
+                    </td>
+                </tr>    
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+
+    {% if is_paginated %}
+    
+        {% if page_obj.has_previous %}
+            <a href="?page={{page_obj.previus_page_number}}"> < </a>
+            
+        {% endif %}    
+        {% for pagenumber in paginator.page_range %}
+        
+            {% if page_obj.number == pagenumber %}
+                <span>{{pagenumber}}</span>
+            {% else %}
+                <a href="?page={{pagenumber}}">{{pagenumber}}</a>
+                
+            {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">></a>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
